@@ -25,12 +25,54 @@ function love.conf(t)
 end
 
 function love.load()
+	player = {
+		x = 0,
+		y = 500,
+		width = 50,
+		height = 100,
+		speed = 400,
+		jumping = false,
+		jumping_allowed = false,
+		projectiles = {},
+		weapons = {}
+	}
+	gravity = 200
 end
 
-function love.update()
+function love.update(dt)
+	-- left/right movement
+	if love.keyboard.isDown("left") and player.x >= 0 then
+		player.x = player.x - (dt * player.speed)
+	end
+	if love.keyboard.isDown("right") and player.x <= 800-player.width then
+		player.x = player.x + (dt * player.speed)
+	end
+	-- jumping
+	if love.keyboard.isDown("up") and player.jumping_allowed == true then
+		player.jumping = true
+	end
+	if player.jumping == true then
+		player.jumping_allowed = false
+		if player.y > 300 then
+			player.y = player.y - (dt * player.speed)
+		else
+			player.jumping = false
+		end
+	end
+	-- gravity
+	player.y = player.y + (dt * gravity)
+	if player.y > 600-player.height then
+		player.y = 600-player.height
+		player.jumping_allowed = true
+	end
+	-- projectile movement
+	--for index,projectile in ipairs(player.projectiles) do
+		-- move projectile based on its speed
+	--end
 end
 
 function love.draw()
+	love.graphics.rectangle("line", player.x, player.y, player.width, player.height)
 end
 
 function love.mousepressed()
@@ -39,7 +81,10 @@ end
 function love.mousereleased()
 end
 
-function love.keypressed()
+function love.keypressed(key)
+	if key == "escape" then
+		love.event.push("quit")
+	end
 end
 
 function love.keyreleased()
