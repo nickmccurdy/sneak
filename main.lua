@@ -47,6 +47,13 @@ function love.update(dt)
 	if love.keyboard.isDown("right") and player.x <= 800-player.width then
 		player.x = player.x + (dt * player.speed)
 	end
+	-- left/right edge collision fixes
+	if player.x < 0 then
+		player.x = 0
+	end
+	if player.x > 800-player.width then
+		player.x = 800-player.width
+	end
 	-- jumping
 	if love.keyboard.isDown("up") and player.jumping_allowed == true then
 		player.jumping = true
