@@ -61,7 +61,7 @@ function love.update(dt)
 	end
 	-- gravity
 	player.y = player.y + (dt * gravity)
-	if player.y > 600-player.height then
+	if player.y >= 600-player.height then
 		player.y = 600-player.height
 		player.jumping_allowed = true
 	end
