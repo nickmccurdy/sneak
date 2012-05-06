@@ -40,12 +40,12 @@ function love.load()
 		-- horizontal physics
 		x_speed = 0,
 		x_ACCEL = 100,
-		x_MAX_SPEED = 400,
+		x_MAX_SPEED = 800,
 		x_FRICTION = 50,
 		-- vertical physics
 		y_speed = 0,
 		y_JUMP_SPEED = 400,
-		y_GRAVITY = 200,
+		y_GRAVITY = 20,
 		-- other movement related stuff
 		direction = "right",
 		jumping_allowed = true,
@@ -61,6 +61,8 @@ function love.load()
 	-- debug
 	debug = Donut.init(10, 10)
 	debug_fps = debug.add("fps")
+	debug_x = debug.add("x")
+	debug_y = debug.add("y")
 	debug_x_speed = debug.add("x speed")
 	debug_y_speed = debug.add("y speed")
 	debug_x_accel = debug.add("x accel")
@@ -72,6 +74,8 @@ end
 
 function love.update(dt)
 	debug.update(debug_fps, love.timer.getFPS())
+	debug.update(debug_x, player.x)
+	debug.update(debug_y, player.y)
 	debug.update(debug_x_speed, player.x_speed)
 	debug.update(debug_y_speed, player.y_speed)
 	debug.update(debug_x_accel, player.x_ACCEL)
@@ -93,6 +97,12 @@ function love.update(dt)
 			player.x_speed = player.x_speed - player.x_FRICTION
 		elseif player.x_speed < 0 then
 			player.x_speed = player.x_speed + player.x_FRICTION
+		end
+		-- max speed
+		if player.x_speed > player.x_MAX_SPEED then
+			player.x_speed = player.x_MAX_SPEED
+		elseif player.x_speed < - player.x_MAX_SPEED then
+			player.x_speed = - player.x_MAX_SPEED
 		end
 		-- player.x modification
 		player.x = player.x + (dt * player.x_speed)
@@ -117,7 +127,7 @@ function love.update(dt)
 	-- vertical physics
 		-- keyboard controls for jumping
 		if love.keyboard.isDown("up") then
-			player.y_speed = 0 - player.y_JUMP_SPEED
+			player.y_speed = 0 + player.y_JUMP_SPEED
 		end
 		-- gravity
 		player.y_speed = player.y_speed - player.y_GRAVITY
@@ -126,6 +136,7 @@ function love.update(dt)
 		-- edge collisions
 		if player.y >= game.HEIGHT - player.HEIGHT then
 			player.y = game.HEIGHT - player.HEIGHT
+			player.y_speed = 0
 		end
 	-- projectile movement
 		--for index,projectile in ipairs(player.projectiles) do
