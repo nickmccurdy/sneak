@@ -44,8 +44,8 @@ function love.load()
 		x_FRICTION = 50,
 		-- vertical physics
 		y_speed = 0,
-		y_JUMP_SPEED = 400,
-		y_GRAVITY = 20,
+		y_JUMP_SPEED = 800,
+		y_GRAVITY = 30,
 		-- other movement related stuff
 		direction = "right",
 		jumping_allowed = true,
@@ -126,8 +126,9 @@ function love.update(dt)
 		end
 	-- vertical physics
 		-- keyboard controls for jumping
-		if love.keyboard.isDown("up") then
+		if love.keyboard.isDown("up") and player.jumping_allowed then
 			player.y_speed = 0 + player.y_JUMP_SPEED
+			player.jumping_allowed = false
 		end
 		-- gravity
 		player.y_speed = player.y_speed - player.y_GRAVITY
@@ -137,6 +138,7 @@ function love.update(dt)
 		if player.y >= game.HEIGHT - player.HEIGHT then
 			player.y = game.HEIGHT - player.HEIGHT
 			player.y_speed = 0
+			player.jumping_allowed = true
 		end
 	-- projectile movement
 		--for index,projectile in ipairs(player.projectiles) do
