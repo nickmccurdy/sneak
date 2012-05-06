@@ -32,20 +32,20 @@ function love.load()
 		-- position and dimensions
 		x = 0,
 		y = 510,
-		width = 50,
-		height = 90,
+		WIDTH = 50,
+		HEIGHT = 90,
 		-- media
-		image_left = love.graphics.newImage("player_left.png"),
-		image_right = love.graphics.newImage("player_right.png"),
+		IMAGE_LEFT = love.graphics.newImage("player_left.png"),
+		IMAGE_RIGHT = love.graphics.newImage("player_right.png"),
 		-- horizontal physics
 		x_speed = 0,
-		x_accel = 100,
-		x_max_speed = 400,
-		x_friction = 50,
+		x_ACCEL = 100,
+		x_MAX_SPEED = 400,
+		x_FRICTION = 50,
 		-- vertical physics
 		y_speed = 0,
-		y_jump_speed = 400,
-		y_gravity = 200,
+		y_JUMP_SPEED = 400,
+		y_GRAVITY = 200,
 		-- other movement related stuff
 		direction = "right",
 		jumping_allowed = true,
@@ -53,19 +53,19 @@ function love.load()
 		projectiles = {},
 		weapons = {}
 	}
-	-- data about the game window
-	window = {
-		width = 800,
-		height = 600
+	-- data about the game
+	game = {
+		WIDTH = 800,
+		HEIGHT = 600
 	}
 	-- debug
 	debug = Donut.init(10, 10)
 	debug_fps = debug.add("fps")
 	debug_x_speed = debug.add("x speed")
+	debug_y_speed = debug.add("y speed")
 	debug_x_accel = debug.add("x accel")
 	debug_x_max_speed = debug.add("x max speed")
 	debug_x_friction = debug.add("x friction")
-	debug_y_speed = debug.add("y speed")
 	debug_y_jump_speed = debug.add("y jump speed")
 	debug_y_gravity = debug.add("y gravity")
 end
@@ -73,26 +73,26 @@ end
 function love.update(dt)
 	debug.update(debug_fps, love.timer.getFPS())
 	debug.update(debug_x_speed, player.x_speed)
-	debug.update(debug_x_accel, player.x_accel)
-	debug.update(debug_x_max_speed, player.x_max_speed)
-	debug.update(debug_x_friction, player.x_friction)
 	debug.update(debug_y_speed, player.y_speed)
-	debug.update(debug_y_jump_speed, player.y_jump_speed)
-	debug.update(debug_y_gravity, player.y_gravity)
+	debug.update(debug_x_accel, player.x_ACCEL)
+	debug.update(debug_x_max_speed, player.x_MAX_SPEED)
+	debug.update(debug_x_friction, player.x_FRICTION)
+	debug.update(debug_y_jump_speed, player.y_JUMP_SPEED)
+	debug.update(debug_y_gravity, player.y_GRAVITY)
 	-- horizontal physics
 		-- keyboard controls for acceleration/deceleration
 		if not ( love.keyboard.isDown("left") and love.keyboard.isDown("right") ) then
 			if love.keyboard.isDown("left") then
-				player.x_speed = player.x_speed - player.x_accel
+				player.x_speed = player.x_speed - player.x_ACCEL
 			elseif love.keyboard.isDown("right") then
-				player.x_speed = player.x_speed + player.x_accel
+				player.x_speed = player.x_speed + player.x_ACCEL
 			end
 		end
 		-- friction
 		if player.x_speed > 0 then
-			player.x_speed = player.x_speed - player.x_friction
+			player.x_speed = player.x_speed - player.x_FRICTION
 		elseif player.x_speed < 0 then
-			player.x_speed = player.x_speed + player.x_friction
+			player.x_speed = player.x_speed + player.x_FRICTION
 		end
 		-- player.x modification
 		player.x = player.x + (dt * player.x_speed)
@@ -108,8 +108,8 @@ function love.update(dt)
 			if player.x_speed < 0 then
 				player.x_speed = 0
 			end
-		elseif player.x > window.width - player.width then
-			player.x = window.width - player.width
+		elseif player.x > game.WIDTH - player.WIDTH then
+			player.x = game.WIDTH - player.WIDTH
 			if player.x_speed > 0 then
 				player.x_speed = 0
 			end
@@ -117,15 +117,15 @@ function love.update(dt)
 	-- vertical physics
 		-- keyboard controls for jumping
 		if love.keyboard.isDown("up") then
-			player.y_speed = 0 - player.y_jump_speed
+			player.y_speed = 0 - player.y_JUMP_SPEED
 		end
 		-- gravity
-		player.y_speed = player.y_speed - player.y_gravity
+		player.y_speed = player.y_speed - player.y_GRAVITY
 		-- player.y modification
 		player.y = player.y - (dt* player.y_speed)
 		-- edge collisions
-		if player.y >= window.height - player.height then
-			player.y = window.height - player.height
+		if player.y >= game.HEIGHT - player.HEIGHT then
+			player.y = game.HEIGHT - player.HEIGHT
 		end
 	-- projectile movement
 		--for index,projectile in ipairs(player.projectiles) do
@@ -134,11 +134,11 @@ function love.update(dt)
 end
 
 function love.draw()
-	--love.graphics.rectangle("line", player.x, player.y, player.width, player.height)
+	--love.graphics.rectangle("line", player.x, player.y, player.WIDTH, player.HEIGHT)
 	if player.direction == "left" then
-		love.graphics.draw(player.image_left, player.x, player.y, player.rotation)
+		love.graphics.draw(player.IMAGE_LEFT, player.x, player.y)
 	elseif player.direction == "right" then
-		love.graphics.draw(player.image_right, player.x, player.y, player.rotation)
+		love.graphics.draw(player.IMAGE_RIGHT, player.x, player.y)
 	end
 	debug.draw()
 end
