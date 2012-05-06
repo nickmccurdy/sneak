@@ -29,12 +29,13 @@ function love.load()
 		x = 0,
 		y = 500,
 		width = 50,
-		height = 100,
+		height = 90,
 		speed = 400,
 		jumping = false,
 		jumping_allowed = false,
 		projectiles = {},
-		weapons = {}
+		weapons = {},
+		image = love.graphics.newImage("player.png")
 	}
 	window = {
 		width = 800,
@@ -83,7 +84,8 @@ function love.update(dt)
 end
 
 function love.draw()
-	love.graphics.rectangle("line", player.x, player.y, player.width, player.height)
+	--love.graphics.rectangle("line", player.x, player.y, player.width, player.height)
+	love.graphics.draw(player.image, player.x, player.y, player.rotation)
 end
 
 function love.mousepressed()
