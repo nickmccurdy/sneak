@@ -31,11 +31,13 @@ function love.load()
 		width = 50,
 		height = 90,
 		speed = 400,
+		direction = "right",
 		jumping = false,
 		jumping_allowed = false,
 		projectiles = {},
 		weapons = {},
-		image = love.graphics.newImage("player.png")
+		image_left = love.graphics.newImage("player_left.png"),
+		image_right = love.graphics.newImage("player_right.png")
 	}
 	window = {
 		width = 800,
@@ -48,9 +50,11 @@ function love.update(dt)
 	-- left/right movement
 	if love.keyboard.isDown("left") and player.x >= 0 then
 		player.x = player.x - (dt * player.speed)
+		player.direction = "left"
 	end
 	if love.keyboard.isDown("right") and player.x <= window.width - player.width then
 		player.x = player.x + (dt * player.speed)
+		player.direction = "right"
 	end
 	-- left/right edge collision fixes
 	if player.x < 0 then
@@ -85,7 +89,11 @@ end
 
 function love.draw()
 	--love.graphics.rectangle("line", player.x, player.y, player.width, player.height)
-	love.graphics.draw(player.image, player.x, player.y, player.rotation)
+	if player.direction == "left" then
+		love.graphics.draw(player.image_left, player.x, player.y, player.rotation)
+	elseif player.direction == "right" then
+		love.graphics.draw(player.image_right, player.x, player.y, player.rotation)
+	end
 end
 
 function love.mousepressed()
