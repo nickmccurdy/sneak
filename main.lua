@@ -25,67 +25,92 @@ function love.conf(t)
 end
 
 function love.load()
+	-- player data
 	player = {
+		-- position and dimensions
 		x = 0,
 		y = 510,
 		width = 50,
 		height = 90,
-		speed = 400,
-		direction = "right",
-		jumping = false,
-		jumping_allowed = false,
-		projectiles = {},
-		weapons = {},
+		-- media
 		image_left = love.graphics.newImage("player_left.png"),
-		image_right = love.graphics.newImage("player_right.png")
+		image_right = love.graphics.newImage("player_right.png"),
+		-- horizontal physics
+		x_speed = 0,
+		x_accel = 100,
+		x_max_speed = 400,
+		x_friction = 50,
+		-- vertical physics
+		y_speed = 0,
+		y_jump_speed = 400,
+		y_gravity = 200,
+		-- other movement related stuff
+		direction = "right",
+		jumping_allowed = true,
+		-- weapons
+		projectiles = {},
+		weapons = {}
 	}
+	-- data about the game window
 	window = {
 		width = 800,
 		height = 600
 	}
-	gravity = 200
 end
 
 function love.update(dt)
-	-- left/right movement
-	if not ( love.keyboard.isDown("left") and love.keyboard.isDown("right") ) then
-		if love.keyboard.isDown("left") and player.x >= 0 then
-			player.x = player.x - (dt * player.speed)
+	-- horizontal physics
+		-- keyboard controls for acceleration/deceleration
+		if not ( love.keyboard.isDown("left") and love.keyboard.isDown("right") ) then
+			if love.keyboard.isDown("left") then
+				player.x_speed = player.x_speed - player.x_accel
+			elseif love.keyboard.isDown("right") then
+				player.x_speed = player.x_speed + player.x_accel
+			end
+		end
+		-- friction
+		if player.x_speed > 0 then
+			player.x_speed = player.x_speed - player.x_friction
+		elseif player.x_speed < 0 then
+			player.x_speed = player.x_speed + player.x_friction
+		end
+		-- player.x modification
+		player.x = player.x + (dt * player.x_speed)
+		-- player direction display
+		if player.x_speed < 0 then
 			player.direction = "left"
-		elseif love.keyboard.isDown("right") and player.x <= window.width - player.width then
-			player.x = player.x + (dt * player.speed)
+		elseif player.x_speed > 0 then
 			player.direction = "right"
 		end
-	end
-	-- left/right edge collision fixes
-	if player.x < 0 then
-		player.x = 0
-	end
-	if player.x > window.width - player.width then
-		player.x = window.width - player.width
-	end
-	-- jumping
-	if love.keyboard.isDown("up") and player.jumping_allowed == true then
-		player.jumping = true
-	end
-	if player.jumping == true then
-		player.jumping_allowed = false
-		if player.y > 300 then
-			player.y = player.y - (dt * player.speed)
-		else
-			player.jumping = false
+		-- edge collisions
+		if player.x < 0 then
+			player.x = 0
+			if player.x_speed < 0 then
+				player.x_speed = 0
+			end
+		elseif player.x > window.width - player.width then
+			player.x = window.width - player.width
+			if player.x_speed > 0 then
+				player.x_speed = 0
+			end
 		end
-	end
-	-- gravity
-	player.y = player.y + (dt * gravity)
-	if player.y >= window.height - player.height then
-		player.y = window.height - player.height
-		player.jumping_allowed = true
-	end
+	-- vertical physics
+		-- keyboard controls for jumping
+		if love.keyboard.isDown("up") then
+			player.y_speed = 0 - player.y_jump_speed
+		end
+		-- gravity
+		player.y_speed = player.y_speed - player.y_gravity
+		-- player.y modification
+		player.y = player.y - (dt* player.y_speed)
+		-- edge collisions
+		if player.y >= window.height - player.height then
+			player.y = window.height - player.height
+		end
 	-- projectile movement
-	--for index,projectile in ipairs(player.projectiles) do
-		-- move projectile based on its speed
-	--end
+		--for index,projectile in ipairs(player.projectiles) do
+			-- move projectile based on its speed
+		--end
 end
 
 function love.draw()
