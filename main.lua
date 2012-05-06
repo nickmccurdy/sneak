@@ -50,8 +50,17 @@ function love.load()
 		direction = "right",
 		jumping_allowed = true,
 		-- weapons
-		projectiles = {},
-		weapons = {}
+		gun = {
+			--position and dimensions
+			x = 0,
+			y = 0,
+			OFFSET = 20,
+			WIDTH = 35,
+			HEIGHT = 50,
+			-- media
+			IMAGE_LEFT = love.graphics.newImage("gun_left.png"),
+			IMAGE_RIGHT = love.graphics.newImage("gun_right.png")
+		}
 	}
 	-- data about the game
 	game = {
@@ -140,6 +149,14 @@ function love.update(dt)
 			player.y_speed = 0
 			player.jumping_allowed = true
 		end
+	-- gun movement
+		if player.direction == "left" then
+			player.gun.x = player.x - player.gun.WIDTH - player.gun.OFFSET
+			player.gun.y = player.y + player.HEIGHT/2 - player.gun.HEIGHT/2
+		elseif player.direction == "right" then
+			player.gun.x = player.x + player.WIDTH + player.gun.OFFSET
+			player.gun.y = player.y + player.HEIGHT/2 - player.gun.HEIGHT/2
+		end
 	-- projectile movement
 		--for index,projectile in ipairs(player.projectiles) do
 			-- move projectile based on its speed
@@ -150,8 +167,10 @@ function love.draw()
 	--love.graphics.rectangle("line", player.x, player.y, player.WIDTH, player.HEIGHT)
 	if player.direction == "left" then
 		love.graphics.draw(player.IMAGE_LEFT, player.x, player.y)
+		love.graphics.draw(player.gun.IMAGE_LEFT, player.gun.x, player.gun.y)
 	elseif player.direction == "right" then
 		love.graphics.draw(player.IMAGE_RIGHT, player.x, player.y)
+		love.graphics.draw(player.gun.IMAGE_RIGHT, player.gun.x, player.gun.y)
 	end
 	debug.draw()
 end
