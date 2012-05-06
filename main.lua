@@ -1,3 +1,5 @@
+require("donut/donut")
+
 function love.conf(t)
 	-- Basic information
 	t.title = "Sneak" -- The title of the window the game is in (string)
@@ -56,9 +58,27 @@ function love.load()
 		width = 800,
 		height = 600
 	}
+	-- debug
+	debug = Donut.init(10, 10)
+	debug_fps = debug.add("fps")
+	debug_x_speed = debug.add("x speed")
+	debug_x_accel = debug.add("x accel")
+	debug_x_max_speed = debug.add("x max speed")
+	debug_x_friction = debug.add("x friction")
+	debug_y_speed = debug.add("y speed")
+	debug_y_jump_speed = debug.add("y jump speed")
+	debug_y_gravity = debug.add("y gravity")
 end
 
 function love.update(dt)
+	debug.update(debug_fps, love.timer.getFPS())
+	debug.update(debug_x_speed, player.x_speed)
+	debug.update(debug_x_accel, player.x_accel)
+	debug.update(debug_x_max_speed, player.x_max_speed)
+	debug.update(debug_x_friction, player.x_friction)
+	debug.update(debug_y_speed, player.y_speed)
+	debug.update(debug_y_jump_speed, player.y_jump_speed)
+	debug.update(debug_y_gravity, player.y_gravity)
 	-- horizontal physics
 		-- keyboard controls for acceleration/deceleration
 		if not ( love.keyboard.isDown("left") and love.keyboard.isDown("right") ) then
@@ -120,6 +140,7 @@ function love.draw()
 	elseif player.direction == "right" then
 		love.graphics.draw(player.image_right, player.x, player.y, player.rotation)
 	end
+	debug.draw()
 end
 
 function love.mousepressed()
@@ -131,6 +152,9 @@ end
 function love.keypressed(key)
 	if key == "escape" then
 		love.event.push("quit")
+	end
+	if key == "space" then
+		debug.toggle()
 	end
 end
 
