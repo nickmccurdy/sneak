@@ -36,6 +36,10 @@ function love.load()
 		projectiles = {},
 		weapons = {}
 	}
+	window = {
+		width = 800,
+		height = 600
+	}
 	gravity = 200
 end
 
@@ -44,15 +48,15 @@ function love.update(dt)
 	if love.keyboard.isDown("left") and player.x >= 0 then
 		player.x = player.x - (dt * player.speed)
 	end
-	if love.keyboard.isDown("right") and player.x <= 800-player.width then
+	if love.keyboard.isDown("right") and player.x <= window.width - player.width then
 		player.x = player.x + (dt * player.speed)
 	end
 	-- left/right edge collision fixes
 	if player.x < 0 then
 		player.x = 0
 	end
-	if player.x > 800-player.width then
-		player.x = 800-player.width
+	if player.x > window.width - player.width then
+		player.x = window.width - player.width
 	end
 	-- jumping
 	if love.keyboard.isDown("up") and player.jumping_allowed == true then
@@ -68,8 +72,8 @@ function love.update(dt)
 	end
 	-- gravity
 	player.y = player.y + (dt * gravity)
-	if player.y >= 600-player.height then
-		player.y = 600-player.height
+	if player.y >= window.height - player.height then
+		player.y = window.height - player.height
 		player.jumping_allowed = true
 	end
 	-- projectile movement
