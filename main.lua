@@ -60,6 +60,20 @@ function love.load()
 			-- media
 			IMAGE_LEFT = love.graphics.newImage("gun_left.png"),
 			IMAGE_RIGHT = love.graphics.newImage("gun_right.png")
+		},
+		bullet = {
+			--position and dimensions
+			x = 0,
+			y = 0,
+			WIDTH = 50,
+			HEIGHT = 35,
+			-- horizontal physics
+			SPEED = 1000,
+			-- media
+			IMAGE = love.graphics.newImage("bullet.png"),
+			-- other
+			show = false,
+			direction = "right"
 		}
 	}
 	-- data about the game
@@ -157,6 +171,20 @@ function love.update(dt)
 			player.gun.x = player.x + player.WIDTH + player.gun.OFFSET
 			player.gun.y = player.y + player.HEIGHT/2 - player.gun.HEIGHT/2
 		end
+	-- bullet movement
+		if love.keyboard.isDown("space") then
+			player.bullet.direction = player.direction
+			player.bullet.x = player.gun.x
+			player.bullet.y = player.gun.y
+			player.bullet.show = true
+		end
+		if player.bullet.show then
+			if player.bullet.direction == "left" then
+				player.bullet.x = player.bullet.x - player.bullet.SPEED
+			elseif player.bullet.direction == "right" then
+				player.bullet.x = player.bullet.x + player.bullet.SPEED
+			end
+		end
 	-- projectile movement
 		--for index,projectile in ipairs(player.projectiles) do
 			-- move projectile based on its speed
@@ -171,6 +199,9 @@ function love.draw()
 	elseif player.direction == "right" then
 		love.graphics.draw(player.IMAGE_RIGHT, player.x, player.y)
 		love.graphics.draw(player.gun.IMAGE_RIGHT, player.gun.x, player.gun.y)
+	end
+	if player.bullet.show then
+		love.graphics.draw(player.bullet.IMAGE, player.bullet.x, player.bullet.y)
 	end
 	debug.draw()
 end
