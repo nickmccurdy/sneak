@@ -76,7 +76,7 @@ function love.update(dt)
 			player.gun.y = player.y + player.HEIGHT/2 - player.gun.HEIGHT/2
 		end
 	-- bullet movement
-		if love.keyboard.isDown(binds.fire) then
+		if love.mouse.isDown("l") then
 			player.bullet.direction = player.direction
 			player.bullet.x = player.gun.x
 			player.bullet.y = player.gun.y

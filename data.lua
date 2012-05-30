@@ -61,10 +61,10 @@ game = {
 
 -- key bindings (controls)
 binds = {
-	left = "left",
-	right = "right",
-	jump = "up",
-	fire = "space",
+	left = "a",
+	right = "d",
+	jump = "w",
+	crouch = "s",
 	quit = "escape"
 }
 
