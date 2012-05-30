@@ -45,6 +45,11 @@ player = {
 		-- other
 		show = false,
 		direction = "right"
+	},
+	cursor = {
+		x = 0,
+		y = 0,
+		IMAGE = love.graphics.newImage("img/crosshair.png")
 	}
 }
 

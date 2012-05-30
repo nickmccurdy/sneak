@@ -29,10 +29,13 @@ end
 
 function love.load()
 	debugLoad()
+	love.mouse.setVisible(false)
 end
 
 function love.update(dt)
 	debugUpdate()
+	player.cursor.x = love.mouse.getX()
+	player.cursor.y = love.mouse.getY()
 	-- horizontal physics
 		-- keyboard controls for acceleration/deceleration
 		if not ( love.keyboard.isDown(binds.left) and love.keyboard.isDown(binds.right) ) then
@@ -130,6 +133,7 @@ function love.draw()
 	if player.bullet.show then
 		love.graphics.draw(player.bullet.IMAGE, player.bullet.x, player.bullet.y)
 	end
+	love.graphics.draw(player.cursor.IMAGE, player.cursor.x, player.cursor.y)
 	debug.draw()
 end
 
