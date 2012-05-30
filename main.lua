@@ -35,9 +35,9 @@ function love.update(dt)
 		player.x = player.x + (dt * player.x_speed)
 		-- player direction display
 		if player.x_speed < 0 then
-			player.direction = binds.left
+			player.direction = "left"
 		elseif player.x_speed > 0 then
-			player.direction = binds.right
+			player.direction = "right"
 		end
 		-- edge collisions
 		if player.x < 0 then
@@ -68,10 +68,10 @@ function love.update(dt)
 			player.jumping_allowed = true
 		end
 	-- gun movement
-		if player.direction == binds.left then
+		if player.direction == "left" then
 			player.gun.x = player.x - player.gun.WIDTH - player.gun.OFFSET
 			player.gun.y = player.y + player.HEIGHT/2 - player.gun.HEIGHT/2
-		elseif player.direction == binds.right then
+		elseif player.direction == "right" then
 			player.gun.x = player.x + player.WIDTH + player.gun.OFFSET
 			player.gun.y = player.y + player.HEIGHT/2 - player.gun.HEIGHT/2
 		end
@@ -83,9 +83,9 @@ function love.update(dt)
 			player.bullet.show = true
 		end
 		if player.bullet.show then
-			if player.bullet.direction == binds.left then
+			if player.bullet.direction == "left" then
 				player.bullet.x = player.bullet.x - player.bullet.SPEED
-			elseif player.bullet.direction == binds.right then
+			elseif player.bullet.direction == "right" then
 				player.bullet.x = player.bullet.x + player.bullet.SPEED
 			end
 		end
@@ -97,10 +97,10 @@ end
 
 function love.draw()
 	--love.graphics.rectangle("line", player.x, player.y, player.WIDTH, player.HEIGHT)
-	if player.direction == binds.left then
+	if player.direction == "left" then
 		love.graphics.draw(player.IMAGE_LEFT, player.x, player.y)
 		love.graphics.draw(player.gun.IMAGE_LEFT, player.gun.x, player.gun.y)
-	elseif player.direction == binds.right then
+	elseif player.direction == "right" then
 		love.graphics.draw(player.IMAGE_RIGHT, player.x, player.y)
 		love.graphics.draw(player.gun.IMAGE_RIGHT, player.gun.x, player.gun.y)
 	end
