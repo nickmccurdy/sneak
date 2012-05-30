@@ -4,11 +4,12 @@ require("data")
 function love.load()
 	debugLoad()
 	love.mouse.setVisible(false)
+	table.insert(player,player_template)
 end
 
 function love.update(dt)
 	debugUpdate()
-	for i = 1,1 do
+	for i = 1,table.getn(player) do
 		player[i].cursor.x = love.mouse.getX()
 		player[i].cursor.y = love.mouse.getY()
 		-- horizontal physics
@@ -98,7 +99,7 @@ function love.update(dt)
 end
 
 function love.draw()
-	for i = 1,1 do
+	for i = 1,table.getn(player) do
 		--love.graphics.rectangle("line", player[i].x, player[i].y, player[i].WIDTH, player[i].HEIGHT)
 		if player[i].direction == "left" then
 			love.graphics.draw(player[i].IMAGE_LEFT, player[i].x, player[i].y)

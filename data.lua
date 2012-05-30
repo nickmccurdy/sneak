@@ -1,57 +1,56 @@
 -- player data
-player = {
-	{
-		-- position and dimensions
+player = {}
+player_template = {
+	-- position and dimensions
+	x = 0,
+	y = 510,
+	WIDTH = 50,
+	HEIGHT = 90,
+	-- media
+	IMAGE_LEFT = love.graphics.newImage("img/player_left.png"),
+	IMAGE_RIGHT = love.graphics.newImage("img/player_right.png"),
+	-- horizontal physics
+	x_speed = 0,
+	x_ACCEL = 100,
+	x_MAX_SPEED = 800,
+	x_FRICTION = 50,
+	-- vertical physics
+	y_speed = 0,
+	y_JUMP_SPEED = 800,
+	y_GRAVITY = 30,
+	-- other movement related stuff
+	direction = "right",
+	jumping_allowed = true,
+	-- weapons
+	gun = {
+		--position and dimensions
 		x = 0,
-		y = 510,
-		WIDTH = 50,
-		HEIGHT = 90,
+		y = 0,
+		OFFSET = 20,
+		WIDTH = 35,
+		HEIGHT = 50,
 		-- media
-		IMAGE_LEFT = love.graphics.newImage("img/player_left.png"),
-		IMAGE_RIGHT = love.graphics.newImage("img/player_right.png"),
+		IMAGE_LEFT = love.graphics.newImage("img/gun_left.png"),
+		IMAGE_RIGHT = love.graphics.newImage("img/gun_right.png")
+	},
+	bullet = {
+		--position and dimensions
+		x = 0,
+		y = 0,
+		WIDTH = 50,
+		HEIGHT = 35,
 		-- horizontal physics
-		x_speed = 0,
-		x_ACCEL = 100,
-		x_MAX_SPEED = 800,
-		x_FRICTION = 50,
-		-- vertical physics
-		y_speed = 0,
-		y_JUMP_SPEED = 800,
-		y_GRAVITY = 30,
-		-- other movement related stuff
-		direction = "right",
-		jumping_allowed = true,
-		-- weapons
-		gun = {
-			--position and dimensions
-			x = 0,
-			y = 0,
-			OFFSET = 20,
-			WIDTH = 35,
-			HEIGHT = 50,
-			-- media
-			IMAGE_LEFT = love.graphics.newImage("img/gun_left.png"),
-			IMAGE_RIGHT = love.graphics.newImage("img/gun_right.png")
-		},
-		bullet = {
-			--position and dimensions
-			x = 0,
-			y = 0,
-			WIDTH = 50,
-			HEIGHT = 35,
-			-- horizontal physics
-			SPEED = 1000,
-			-- media
-			IMAGE = love.graphics.newImage("img/bullet.png"),
-			-- other
-			show = false,
-			direction = "right"
-		},
-		cursor = {
-			x = 0,
-			y = 0,
-			IMAGE = love.graphics.newImage("img/crosshair.png")
-		}
+		SPEED = 1000,
+		-- media
+		IMAGE = love.graphics.newImage("img/bullet.png"),
+		-- other
+		show = false,
+		direction = "right"
+	},
+	cursor = {
+		x = 0,
+		y = 0,
+		IMAGE = love.graphics.newImage("img/crosshair.png")
 	}
 }
 
