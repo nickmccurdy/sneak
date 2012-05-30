@@ -35,10 +35,10 @@ function love.update(dt)
 	debugUpdate()
 	-- horizontal physics
 		-- keyboard controls for acceleration/deceleration
-		if not ( love.keyboard.isDown("left") and love.keyboard.isDown("right") ) then
-			if love.keyboard.isDown("left") then
+		if not ( love.keyboard.isDown(binds.left) and love.keyboard.isDown(binds.right) ) then
+			if love.keyboard.isDown(binds.left) then
 				player.x_speed = player.x_speed - player.x_ACCEL
-			elseif love.keyboard.isDown("right") then
+			elseif love.keyboard.isDown(binds.right) then
 				player.x_speed = player.x_speed + player.x_ACCEL
 			end
 		end
@@ -58,9 +58,9 @@ function love.update(dt)
 		player.x = player.x + (dt * player.x_speed)
 		-- player direction display
 		if player.x_speed < 0 then
-			player.direction = "left"
+			player.direction = binds.left
 		elseif player.x_speed > 0 then
-			player.direction = "right"
+			player.direction = binds.right
 		end
 		-- edge collisions
 		if player.x < 0 then
@@ -76,7 +76,7 @@ function love.update(dt)
 		end
 	-- vertical physics
 		-- keyboard controls for jumping
-		if love.keyboard.isDown("up") and player.jumping_allowed then
+		if love.keyboard.isDown(binds.jump) and player.jumping_allowed then
 			player.y_speed = 0 + player.y_JUMP_SPEED
 			player.jumping_allowed = false
 		end
@@ -91,24 +91,24 @@ function love.update(dt)
 			player.jumping_allowed = true
 		end
 	-- gun movement
-		if player.direction == "left" then
+		if player.direction == binds.left then
 			player.gun.x = player.x - player.gun.WIDTH - player.gun.OFFSET
 			player.gun.y = player.y + player.HEIGHT/2 - player.gun.HEIGHT/2
-		elseif player.direction == "right" then
+		elseif player.direction == binds.right then
 			player.gun.x = player.x + player.WIDTH + player.gun.OFFSET
 			player.gun.y = player.y + player.HEIGHT/2 - player.gun.HEIGHT/2
 		end
 	-- bullet movement
-		if love.keyboard.isDown("space") then
+		if love.keyboard.isDown(binds.fire) then
 			player.bullet.direction = player.direction
 			player.bullet.x = player.gun.x
 			player.bullet.y = player.gun.y
 			player.bullet.show = true
 		end
 		if player.bullet.show then
-			if player.bullet.direction == "left" then
+			if player.bullet.direction == binds.left then
 				player.bullet.x = player.bullet.x - player.bullet.SPEED
-			elseif player.bullet.direction == "right" then
+			elseif player.bullet.direction == binds.right then
 				player.bullet.x = player.bullet.x + player.bullet.SPEED
 			end
 		end
@@ -120,10 +120,10 @@ end
 
 function love.draw()
 	--love.graphics.rectangle("line", player.x, player.y, player.WIDTH, player.HEIGHT)
-	if player.direction == "left" then
+	if player.direction == binds.left then
 		love.graphics.draw(player.IMAGE_LEFT, player.x, player.y)
 		love.graphics.draw(player.gun.IMAGE_LEFT, player.gun.x, player.gun.y)
-	elseif player.direction == "right" then
+	elseif player.direction == binds.right then
 		love.graphics.draw(player.IMAGE_RIGHT, player.x, player.y)
 		love.graphics.draw(player.gun.IMAGE_RIGHT, player.gun.x, player.gun.y)
 	end
@@ -140,11 +140,8 @@ function love.mousereleased()
 end
 
 function love.keypressed(key)
-	if key == "escape" then
+	if key == binds.quit then
 		love.event.push("quit")
-	end
-	if key == "space" then
-		debug.toggle()
 	end
 end
 

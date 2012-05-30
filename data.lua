@@ -54,6 +54,15 @@ game = {
 	HEIGHT = 600
 }
 
+-- key bindings (controls)
+binds = {
+	left = "left",
+	right = "right",
+	jump = "up",
+	fire = "space",
+	quit = "escape"
+}
+
 function debugLoad()
 	debug = Donut.init(10, 10)
 	debug_fps = debug.add("fps")
