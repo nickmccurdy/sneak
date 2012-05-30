@@ -8,106 +8,110 @@ end
 
 function love.update(dt)
 	debugUpdate()
-	player.cursor.x = love.mouse.getX()
-	player.cursor.y = love.mouse.getY()
-	-- horizontal physics
-		-- keyboard controls for acceleration/deceleration
-		if not ( love.keyboard.isDown(binds.left) and love.keyboard.isDown(binds.right) ) then
-			if love.keyboard.isDown(binds.left) then
-				player.x_speed = player.x_speed - player.x_ACCEL
-			elseif love.keyboard.isDown(binds.right) then
-				player.x_speed = player.x_speed + player.x_ACCEL
+	for i = 1,1 do
+		player[i].cursor.x = love.mouse.getX()
+		player[i].cursor.y = love.mouse.getY()
+		-- horizontal physics
+			-- keyboard controls for acceleration/deceleration
+			if not ( love.keyboard.isDown(binds.left) and love.keyboard.isDown(binds.right) ) then
+				if love.keyboard.isDown(binds.left) then
+					player[i].x_speed = player[i].x_speed - player[i].x_ACCEL
+				elseif love.keyboard.isDown(binds.right) then
+					player[i].x_speed = player[i].x_speed + player[i].x_ACCEL
+				end
 			end
-		end
-		-- friction
-		if player.x_speed > 0 then
-			player.x_speed = player.x_speed - player.x_FRICTION
-		elseif player.x_speed < 0 then
-			player.x_speed = player.x_speed + player.x_FRICTION
-		end
-		-- max speed
-		if player.x_speed > player.x_MAX_SPEED then
-			player.x_speed = player.x_MAX_SPEED
-		elseif player.x_speed < - player.x_MAX_SPEED then
-			player.x_speed = - player.x_MAX_SPEED
-		end
-		-- player.x modification
-		player.x = player.x + (dt * player.x_speed)
-		-- player direction display
-		if player.x_speed < 0 then
-			player.direction = "left"
-		elseif player.x_speed > 0 then
-			player.direction = "right"
-		end
-		-- edge collisions
-		if player.x < 0 then
-			player.x = 0
-			if player.x_speed < 0 then
-				player.x_speed = 0
+			-- friction
+			if player[i].x_speed > 0 then
+				player[i].x_speed = player[i].x_speed - player[i].x_FRICTION
+			elseif player[i].x_speed < 0 then
+				player[i].x_speed = player[i].x_speed + player[i].x_FRICTION
 			end
-		elseif player.x > game.WIDTH - player.WIDTH then
-			player.x = game.WIDTH - player.WIDTH
-			if player.x_speed > 0 then
-				player.x_speed = 0
+			-- max speed
+			if player[i].x_speed > player[i].x_MAX_SPEED then
+				player[i].x_speed = player[i].x_MAX_SPEED
+			elseif player[i].x_speed < - player[i].x_MAX_SPEED then
+				player[i].x_speed = - player[i].x_MAX_SPEED
 			end
-		end
-	-- vertical physics
-		-- keyboard controls for jumping
-		if love.keyboard.isDown(binds.jump) and player.jumping_allowed then
-			player.y_speed = 0 + player.y_JUMP_SPEED
-			player.jumping_allowed = false
-		end
-		-- gravity
-		player.y_speed = player.y_speed - player.y_GRAVITY
-		-- player.y modification
-		player.y = player.y - (dt* player.y_speed)
-		-- edge collisions
-		if player.y >= game.HEIGHT - player.HEIGHT then
-			player.y = game.HEIGHT - player.HEIGHT
-			player.y_speed = 0
-			player.jumping_allowed = true
-		end
-	-- gun movement
-		if player.direction == "left" then
-			player.gun.x = player.x - player.gun.WIDTH - player.gun.OFFSET
-			player.gun.y = player.y + player.HEIGHT/2 - player.gun.HEIGHT/2
-		elseif player.direction == "right" then
-			player.gun.x = player.x + player.WIDTH + player.gun.OFFSET
-			player.gun.y = player.y + player.HEIGHT/2 - player.gun.HEIGHT/2
-		end
-	-- bullet movement
-		if love.mouse.isDown("l") then
-			player.bullet.direction = player.direction
-			player.bullet.x = player.gun.x
-			player.bullet.y = player.gun.y
-			player.bullet.show = true
-		end
-		if player.bullet.show then
-			if player.bullet.direction == "left" then
-				player.bullet.x = player.bullet.x - player.bullet.SPEED
-			elseif player.bullet.direction == "right" then
-				player.bullet.x = player.bullet.x + player.bullet.SPEED
+			-- player[i].x modification
+			player[i].x = player[i].x + (dt * player[i].x_speed)
+			-- player[i] direction display
+			if player[i].x_speed < 0 then
+				player[i].direction = "left"
+			elseif player[i].x_speed > i then
+				player[i].direction = "right"
 			end
-		end
-	-- projectile movement
-		--for index,projectile in ipairs(player.projectiles) do
-			-- move projectile based on its speed
-		--end
+			-- edge collisions
+			if player[i].x < 0 then
+				player[i].x = 0
+				if player[i].x_speed < 0 then
+					player[i].x_speed = 0
+				end
+			elseif player[i].x > game.WIDTH - player[i].WIDTH then
+				player[i].x = game.WIDTH - player[i].WIDTH
+				if player[i].x_speed > 0 then
+					player[i].x_speed = 0
+				end
+			end
+		-- vertical physics
+			-- keyboard controls for jumping
+			if love.keyboard.isDown(binds.jump) and player[i].jumping_allowed then
+				player[i].y_speed = 0 + player[i].y_JUMP_SPEED
+				player[i].jumping_allowed = false
+			end
+			-- gravity
+			player[i].y_speed = player[i].y_speed - player[i].y_GRAVITY
+			-- player[i].y modification
+			player[i].y = player[i].y - (dt* player[i].y_speed)
+			-- edge collisions
+			if player[i].y >= game.HEIGHT - player[i].HEIGHT then
+				player[i].y = game.HEIGHT - player[i].HEIGHT
+				player[i].y_speed = 0
+				player[i].jumping_allowed = true
+			end
+		-- gun movement
+			if player[i].direction == "left" then
+				player[i].gun.x = player[i].x - player[i].gun.WIDTH - player[i].gun.OFFSET
+				player[i].gun.y = player[i].y + player[i].HEIGHT/2 - player[i].gun.HEIGHT/2
+			elseif player[i].direction == "right" then
+				player[i].gun.x = player[i].x + player[i].WIDTH + player[i].gun.OFFSET
+				player[i].gun.y = player[i].y + player[i].HEIGHT/2 - player[i].gun.HEIGHT/2
+			end
+		-- bullet movement
+			if love.mouse.isDown("l") then
+				player[i].bullet.direction = player[i].direction
+				player[i].bullet.x = player[i].gun.x
+				player[i].bullet.y = player[i].gun.y
+				player[i].bullet.show = true
+			end
+			if player[i].bullet.show then
+				if player[i].bullet.direction == "left" then
+					player[i].bullet.x = player[i].bullet.x - player[i].bullet.SPEED
+				elseif player[i].bullet.direction == "right" then
+					player[i].bullet.x = player[i].bullet.x + player[i].bullet.SPEED
+				end
+			end
+		-- projectile movement
+			--for index,projectile in ipairs(player[i].projectiles) do
+				-- move projectile based on its speed
+			--end
+	end
 end
 
 function love.draw()
-	--love.graphics.rectangle("line", player.x, player.y, player.WIDTH, player.HEIGHT)
-	if player.direction == "left" then
-		love.graphics.draw(player.IMAGE_LEFT, player.x, player.y)
-		love.graphics.draw(player.gun.IMAGE_LEFT, player.gun.x, player.gun.y)
-	elseif player.direction == "right" then
-		love.graphics.draw(player.IMAGE_RIGHT, player.x, player.y)
-		love.graphics.draw(player.gun.IMAGE_RIGHT, player.gun.x, player.gun.y)
+	for i = 1,1 do
+		--love.graphics.rectangle("line", player[i].x, player[i].y, player[i].WIDTH, player[i].HEIGHT)
+		if player[i].direction == "left" then
+			love.graphics.draw(player[i].IMAGE_LEFT, player[i].x, player[i].y)
+			love.graphics.draw(player[i].gun.IMAGE_LEFT, player[i].gun.x, player[i].gun.y)
+		elseif player[i].direction == "right" then
+			love.graphics.draw(player[i].IMAGE_RIGHT, player[i].x, player[i].y)
+			love.graphics.draw(player[i].gun.IMAGE_RIGHT, player[i].gun.x, player[i].gun.y)
+		end
+		if player[i].bullet.show then
+			love.graphics.draw(player[i].bullet.IMAGE, player[i].bullet.x, player[i].bullet.y)
+		end
+		love.graphics.draw(player[i].cursor.IMAGE, player[i].cursor.x, player[i].cursor.y)
 	end
-	if player.bullet.show then
-		love.graphics.draw(player.bullet.IMAGE, player.bullet.x, player.bullet.y)
-	end
-	love.graphics.draw(player.cursor.IMAGE, player.cursor.x, player.cursor.y)
 	debug.draw()
 end
 
