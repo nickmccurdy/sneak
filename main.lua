@@ -35,8 +35,8 @@ function love.load()
 		WIDTH = 50,
 		HEIGHT = 90,
 		-- media
-		IMAGE_LEFT = love.graphics.newImage("player_left.png"),
-		IMAGE_RIGHT = love.graphics.newImage("player_right.png"),
+		IMAGE_LEFT = love.graphics.newImage("img/player_left.png"),
+		IMAGE_RIGHT = love.graphics.newImage("img/player_right.png"),
 		-- horizontal physics
 		x_speed = 0,
 		x_ACCEL = 100,
@@ -58,8 +58,8 @@ function love.load()
 			WIDTH = 35,
 			HEIGHT = 50,
 			-- media
-			IMAGE_LEFT = love.graphics.newImage("gun_left.png"),
-			IMAGE_RIGHT = love.graphics.newImage("gun_right.png")
+			IMAGE_LEFT = love.graphics.newImage("img/gun_left.png"),
+			IMAGE_RIGHT = love.graphics.newImage("img/gun_right.png")
 		},
 		bullet = {
 			--position and dimensions
@@ -70,7 +70,7 @@ function love.load()
 			-- horizontal physics
 			SPEED = 1000,
 			-- media
-			IMAGE = love.graphics.newImage("bullet.png"),
+			IMAGE = love.graphics.newImage("img/bullet.png"),
 			-- other
 			show = false,
 			direction = "right"
