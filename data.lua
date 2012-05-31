@@ -1,6 +1,7 @@
 -- player data
-player = {}
+players = {}
 player_template = {
+	name = "player 1",
 	-- position and dimensions
 	x = 0,
 	y = 510,
@@ -23,6 +24,7 @@ player_template = {
 	jumping_allowed = true,
 	-- weapons
 	gun = {
+		name = "pistol",
 		--position and dimensions
 		x = 0,
 		y = 0,
@@ -34,6 +36,7 @@ player_template = {
 		IMAGE_RIGHT = love.graphics.newImage("img/gun_right.png")
 	},
 	bullet = {
+		name = "pistol bullet",
 		--position and dimensions
 		x = 0,
 		y = 0,
@@ -85,13 +88,13 @@ end
 
 function debugUpdate()
 	debug.update(debug_fps, love.timer.getFPS())
-	debug.update(debug_x, player[1].x)
-	debug.update(debug_y, player[1].y)
-	debug.update(debug_x_speed, player[1].x_speed)
-	debug.update(debug_y_speed, player[1].y_speed)
-	debug.update(debug_x_accel, player[1].x_ACCEL)
-	debug.update(debug_x_max_speed, player[1].x_MAX_SPEED)
-	debug.update(debug_x_friction, player[1].x_FRICTION)
-	debug.update(debug_y_jump_speed, player[1].y_JUMP_SPEED)
-	debug.update(debug_y_gravity, player[1].y_GRAVITY)
+	debug.update(debug_x, players[1].x)
+	debug.update(debug_y, players[1].y)
+	debug.update(debug_x_speed, players[1].x_speed)
+	debug.update(debug_y_speed, players[1].y_speed)
+	debug.update(debug_x_accel, players[1].x_ACCEL)
+	debug.update(debug_x_max_speed, players[1].x_MAX_SPEED)
+	debug.update(debug_x_friction, players[1].x_FRICTION)
+	debug.update(debug_y_jump_speed, players[1].y_JUMP_SPEED)
+	debug.update(debug_y_gravity, players[1].y_GRAVITY)
 end

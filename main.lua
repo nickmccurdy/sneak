@@ -4,114 +4,114 @@ require("data")
 function love.load()
 	debugLoad()
 	love.mouse.setVisible(false)
-	table.insert(player,player_template)
+	table.insert(players,player_template)
 end
 
 function love.update(dt)
 	debugUpdate()
-	for i = 1,table.getn(player) do
-		player[i].cursor.x = love.mouse.getX()
-		player[i].cursor.y = love.mouse.getY()
+	for i = 1,table.getn(players) do
+		players[i].cursor.x = love.mouse.getX()
+		players[i].cursor.y = love.mouse.getY()
 		-- horizontal physics
 			-- keyboard controls for acceleration/deceleration
 			if not ( love.keyboard.isDown(binds.left) and love.keyboard.isDown(binds.right) ) then
 				if love.keyboard.isDown(binds.left) then
-					player[i].x_speed = player[i].x_speed - player[i].x_ACCEL
+					players[i].x_speed = players[i].x_speed - players[i].x_ACCEL
 				elseif love.keyboard.isDown(binds.right) then
-					player[i].x_speed = player[i].x_speed + player[i].x_ACCEL
+					players[i].x_speed = players[i].x_speed + players[i].x_ACCEL
 				end
 			end
 			-- friction
-			if player[i].x_speed > 0 then
-				player[i].x_speed = player[i].x_speed - player[i].x_FRICTION
-			elseif player[i].x_speed < 0 then
-				player[i].x_speed = player[i].x_speed + player[i].x_FRICTION
+			if players[i].x_speed > 0 then
+				players[i].x_speed = players[i].x_speed - players[i].x_FRICTION
+			elseif players[i].x_speed < 0 then
+				players[i].x_speed = players[i].x_speed + players[i].x_FRICTION
 			end
 			-- max speed
-			if player[i].x_speed > player[i].x_MAX_SPEED then
-				player[i].x_speed = player[i].x_MAX_SPEED
-			elseif player[i].x_speed < - player[i].x_MAX_SPEED then
-				player[i].x_speed = - player[i].x_MAX_SPEED
+			if players[i].x_speed > players[i].x_MAX_SPEED then
+				players[i].x_speed = players[i].x_MAX_SPEED
+			elseif players[i].x_speed < - players[i].x_MAX_SPEED then
+				players[i].x_speed = - players[i].x_MAX_SPEED
 			end
-			-- player[i].x modification
-			player[i].x = player[i].x + (dt * player[i].x_speed)
-			-- player[i] direction display
-			if player[i].x_speed < 0 then
-				player[i].direction = "left"
-			elseif player[i].x_speed > i then
-				player[i].direction = "right"
+			-- players[i].x modification
+			players[i].x = players[i].x + (dt * players[i].x_speed)
+			-- players[i] direction display
+			if players[i].x_speed < 0 then
+				players[i].direction = "left"
+			elseif players[i].x_speed > i then
+				players[i].direction = "right"
 			end
 			-- edge collisions
-			if player[i].x < 0 then
-				player[i].x = 0
-				if player[i].x_speed < 0 then
-					player[i].x_speed = 0
+			if players[i].x < 0 then
+				players[i].x = 0
+				if players[i].x_speed < 0 then
+					players[i].x_speed = 0
 				end
-			elseif player[i].x > game.WIDTH - player[i].WIDTH then
-				player[i].x = game.WIDTH - player[i].WIDTH
-				if player[i].x_speed > 0 then
-					player[i].x_speed = 0
+			elseif players[i].x > game.WIDTH - players[i].WIDTH then
+				players[i].x = game.WIDTH - players[i].WIDTH
+				if players[i].x_speed > 0 then
+					players[i].x_speed = 0
 				end
 			end
 		-- vertical physics
 			-- keyboard controls for jumping
-			if love.keyboard.isDown(binds.jump) and player[i].jumping_allowed then
-				player[i].y_speed = 0 + player[i].y_JUMP_SPEED
-				player[i].jumping_allowed = false
+			if love.keyboard.isDown(binds.jump) and players[i].jumping_allowed then
+				players[i].y_speed = 0 + players[i].y_JUMP_SPEED
+				players[i].jumping_allowed = false
 			end
 			-- gravity
-			player[i].y_speed = player[i].y_speed - player[i].y_GRAVITY
-			-- player[i].y modification
-			player[i].y = player[i].y - (dt* player[i].y_speed)
+			players[i].y_speed = players[i].y_speed - players[i].y_GRAVITY
+			-- players[i].y modification
+			players[i].y = players[i].y - (dt* players[i].y_speed)
 			-- edge collisions
-			if player[i].y >= game.HEIGHT - player[i].HEIGHT then
-				player[i].y = game.HEIGHT - player[i].HEIGHT
-				player[i].y_speed = 0
-				player[i].jumping_allowed = true
+			if players[i].y >= game.HEIGHT - players[i].HEIGHT then
+				players[i].y = game.HEIGHT - players[i].HEIGHT
+				players[i].y_speed = 0
+				players[i].jumping_allowed = true
 			end
 		-- gun movement
-			if player[i].direction == "left" then
-				player[i].gun.x = player[i].x - player[i].gun.WIDTH - player[i].gun.OFFSET
-				player[i].gun.y = player[i].y + player[i].HEIGHT/2 - player[i].gun.HEIGHT/2
-			elseif player[i].direction == "right" then
-				player[i].gun.x = player[i].x + player[i].WIDTH + player[i].gun.OFFSET
-				player[i].gun.y = player[i].y + player[i].HEIGHT/2 - player[i].gun.HEIGHT/2
+			if players[i].direction == "left" then
+				players[i].gun.x = players[i].x - players[i].gun.WIDTH - players[i].gun.OFFSET
+				players[i].gun.y = players[i].y + players[i].HEIGHT/2 - players[i].gun.HEIGHT/2
+			elseif players[i].direction == "right" then
+				players[i].gun.x = players[i].x + players[i].WIDTH + players[i].gun.OFFSET
+				players[i].gun.y = players[i].y + players[i].HEIGHT/2 - players[i].gun.HEIGHT/2
 			end
 		-- bullet movement
 			if love.mouse.isDown("l") then
-				player[i].bullet.direction = player[i].direction
-				player[i].bullet.x = player[i].gun.x
-				player[i].bullet.y = player[i].gun.y
-				player[i].bullet.show = true
+				players[i].bullet.direction = players[i].direction
+				players[i].bullet.x = players[i].gun.x
+				players[i].bullet.y = players[i].gun.y
+				players[i].bullet.show = true
 			end
-			if player[i].bullet.show then
-				if player[i].bullet.direction == "left" then
-					player[i].bullet.x = player[i].bullet.x - player[i].bullet.SPEED
-				elseif player[i].bullet.direction == "right" then
-					player[i].bullet.x = player[i].bullet.x + player[i].bullet.SPEED
+			if players[i].bullet.show then
+				if players[i].bullet.direction == "left" then
+					players[i].bullet.x = players[i].bullet.x - players[i].bullet.SPEED
+				elseif players[i].bullet.direction == "right" then
+					players[i].bullet.x = players[i].bullet.x + players[i].bullet.SPEED
 				end
 			end
 		-- projectile movement
-			--for index,projectile in ipairs(player[i].projectiles) do
+			--for index,projectile in ipairs(players[i].projectiles) do
 				-- move projectile based on its speed
 			--end
 	end
 end
 
 function love.draw()
-	for i = 1,table.getn(player) do
-		--love.graphics.rectangle("line", player[i].x, player[i].y, player[i].WIDTH, player[i].HEIGHT)
-		if player[i].direction == "left" then
-			love.graphics.draw(player[i].IMAGE_LEFT, player[i].x, player[i].y)
-			love.graphics.draw(player[i].gun.IMAGE_LEFT, player[i].gun.x, player[i].gun.y)
-		elseif player[i].direction == "right" then
-			love.graphics.draw(player[i].IMAGE_RIGHT, player[i].x, player[i].y)
-			love.graphics.draw(player[i].gun.IMAGE_RIGHT, player[i].gun.x, player[i].gun.y)
+	for i = 1,table.getn(players) do
+		--love.graphics.rectangle("line", players[i].x, players[i].y, players[i].WIDTH, players[i].HEIGHT)
+		if players[i].direction == "left" then
+			love.graphics.draw(players[i].IMAGE_LEFT, players[i].x, players[i].y)
+			love.graphics.draw(players[i].gun.IMAGE_LEFT, players[i].gun.x, players[i].gun.y)
+		elseif players[i].direction == "right" then
+			love.graphics.draw(players[i].IMAGE_RIGHT, players[i].x, players[i].y)
+			love.graphics.draw(players[i].gun.IMAGE_RIGHT, players[i].gun.x, players[i].gun.y)
 		end
-		if player[i].bullet.show then
-			love.graphics.draw(player[i].bullet.IMAGE, player[i].bullet.x, player[i].bullet.y)
+		if players[i].bullet.show then
+			love.graphics.draw(players[i].bullet.IMAGE, players[i].bullet.x, players[i].bullet.y)
 		end
-		love.graphics.draw(player[i].cursor.IMAGE, player[i].cursor.x, player[i].cursor.y)
+		love.graphics.draw(players[i].cursor.IMAGE, players[i].cursor.x, players[i].cursor.y)
 	end
 	debug.draw()
 end
