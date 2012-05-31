@@ -43,7 +43,7 @@ player_template = {
 		WIDTH = 50,
 		HEIGHT = 35,
 		-- horizontal physics
-		SPEED = 1000,
+		SPEED = 50,
 		-- media
 		IMAGE = love.graphics.newImage("img/bullet.png"),
 		-- other
@@ -84,6 +84,8 @@ function debugLoad()
 	debug_x_friction = debug.add("x friction")
 	debug_y_jump_speed = debug.add("y jump speed")
 	debug_y_gravity = debug.add("y gravity")
+	debug_gun_x = debug.add("gun x")
+	debug_bullet_x = debug.add("bullet x")
 end
 
 function debugUpdate()
@@ -97,4 +99,6 @@ function debugUpdate()
 	debug.update(debug_x_friction, players[1].x_FRICTION)
 	debug.update(debug_y_jump_speed, players[1].y_JUMP_SPEED)
 	debug.update(debug_y_gravity, players[1].y_GRAVITY)
+	debug.update(debug_gun_x, players[1].gun.x)
+	debug.update(debug_bullet_x, players[1].bullet.x)
 end
