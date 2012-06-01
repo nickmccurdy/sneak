@@ -78,17 +78,21 @@ function love.update(dt)
 				players[i].gun.y = players[i].y + players[i].HEIGHT/2 - players[i].gun.HEIGHT/2
 			end
 		-- bullet movement
-			if love.mouse.isDown("l") then
+			if love.mouse.isDown("l") and not players[i].bullet.show then
 				players[i].bullet.direction = players[i].direction
 				players[i].bullet.x = players[i].gun.x
 				players[i].bullet.y = players[i].gun.y
 				players[i].bullet.show = true
 			end
 			if players[i].bullet.show then
-				if players[i].bullet.direction == "left" then
-					players[i].bullet.x = players[i].bullet.x - players[i].bullet.SPEED
-				elseif players[i].bullet.direction == "right" then
-					players[i].bullet.x = players[i].bullet.x + players[i].bullet.SPEED
+				if players[i].bullet.x + players[i].bullet.WIDTH < 0 or players[i].bullet.x > game.WIDTH then
+					players[i].bullet.show = false
+				else
+					if players[i].bullet.direction == "left" then
+						players[i].bullet.x = players[i].bullet.x - players[i].bullet.SPEED
+					elseif players[i].bullet.direction == "right" then
+						players[i].bullet.x = players[i].bullet.x + players[i].bullet.SPEED
+					end
 				end
 			end
 		-- projectile movement
