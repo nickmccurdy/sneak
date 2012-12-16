@@ -1,11 +1,11 @@
 -- 3rd party libraries
-require("donut/donut")
+require("lib/donut/donut")
 
 -- additional game code
-require("data")
-require("update")
-require("draw")
-require("events")
+require("src/data")
+require("src/update")
+require("src/draw")
+require("src/events")
 
 function love.load()
 	debugLoad()
