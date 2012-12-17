@@ -1,6 +1,6 @@
 function love.update(dt)
 	debugUpdate()
-	for i = 1,table.getn(players) do
+	for i = 1,#players do
 		players[i].cursor.x = love.mouse.getX()
 		players[i].cursor.y = love.mouse.getY()
 		-- horizontal physics

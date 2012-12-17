@@ -1,5 +1,5 @@
 function love.draw()
-	for i = 1,table.getn(players) do
+	for i = 1,#players do
 		--love.graphics.rectangle("line", players[i].x, players[i].y, players[i].WIDTH, players[i].HEIGHT)
 		if players[i].direction == "left" then
 			love.graphics.draw(players[i].IMAGE_LEFT, players[i].x, players[i].y)
