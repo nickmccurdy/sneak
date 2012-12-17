@@ -29,7 +29,7 @@ function love.update(dt)
 			-- players[i] direction display
 			if players[i].x_speed < 0 then
 				players[i].direction = "left"
-			elseif players[i].x_speed > i then
+			elseif players[i].x_speed > 0 then
 				players[i].direction = "right"
 			end
 			-- edge collisions
