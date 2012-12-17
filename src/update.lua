@@ -1,6 +1,6 @@
 function love.update(dt)
 	debugUpdate()
-	for _, player in pairs(players) do
+	for _, player in ipairs(players) do
 		player.cursor.x = love.mouse.getX()
 		player.cursor.y = love.mouse.getY()
 		-- horizontal physics

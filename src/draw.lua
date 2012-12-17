@@ -1,5 +1,5 @@
 function love.draw()
-	for _, player in pairs(players) do
+	for _, player in ipairs(players) do
 		--love.graphics.rectangle("line", player.x, player.y, player.WIDTH, player.HEIGHT)
 		if player.direction == "left" then
 			love.graphics.draw(player.IMAGE_LEFT, player.x, player.y)
