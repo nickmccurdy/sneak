@@ -62,27 +62,27 @@ function love.update(dt)
 			end
 		-- gun movement
 			if player.direction == "left" then
-				player.gun.x = player.x - player.gun.WIDTH - player.gun.OFFSET
-				player.gun.y = player.y + player.HEIGHT/2 - player.gun.HEIGHT/2
+				player.weapons.gun.x = player.x - player.weapons.gun.WIDTH - player.weapons.gun.OFFSET
+				player.weapons.gun.y = player.y + player.HEIGHT/2 - player.weapons.gun.HEIGHT/2
 			elseif player.direction == "right" then
-				player.gun.x = player.x + player.WIDTH + player.gun.OFFSET
-				player.gun.y = player.y + player.HEIGHT/2 - player.gun.HEIGHT/2
+				player.weapons.gun.x = player.x + player.WIDTH + player.weapons.gun.OFFSET
+				player.weapons.gun.y = player.y + player.HEIGHT/2 - player.weapons.gun.HEIGHT/2
 			end
 		-- bullet movement
-			if love.mouse.isDown("l") and not player.bullet.show then
-				player.bullet.direction = player.direction
-				player.bullet.x = player.gun.x
-				player.bullet.y = player.gun.y
-				player.bullet.show = true
+			if love.mouse.isDown("l") and not player.projectiles.bullet.show then
+				player.projectiles.bullet.direction = player.direction
+				player.projectiles.bullet.x = player.weapons.gun.x
+				player.projectiles.bullet.y = player.weapons.gun.y
+				player.projectiles.bullet.show = true
 			end
-			if player.bullet.show then
-				if player.bullet.x + player.bullet.WIDTH < 0 or player.bullet.x > game.WIDTH then
-					player.bullet.show = false
-				else
-					if player.bullet.direction == "left" then
-						player.bullet.x = player.bullet.x - player.bullet.SPEED
-					elseif player.bullet.direction == "right" then
-						player.bullet.x = player.bullet.x + player.bullet.SPEED
+			if player.projectiles.bullet.show then
+				if player.projectiles.bullet.x + player.projectiles.bullet.WIDTH < 0 or player.projectiles.bullet.x > game.WIDTH then
+					player.projectiles.bullet.show = false
+					else
+					if player.projectiles.bullet.direction == "left" then
+						player.projectiles.bullet.x = player.projectiles.bullet.x - player.projectiles.bullet.SPEED
+					elseif player.projectiles.bullet.direction == "right" then
+						player.projectiles.bullet.x = player.projectiles.bullet.x + player.projectiles.bullet.SPEED
 					end
 				end
 			end

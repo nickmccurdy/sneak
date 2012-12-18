@@ -23,32 +23,36 @@ player_template = {
 	direction = "right",
 	jumping_allowed = true,
 	-- weapons
-	gun = {
-		name = "pistol",
-		--position and dimensions
-		x = 0,
-		y = 0,
-		OFFSET = 20,
-		WIDTH = 35,
-		HEIGHT = 50,
-		-- media
-		IMAGE_LEFT = love.graphics.newImage("img/gun_left.png"),
-		IMAGE_RIGHT = love.graphics.newImage("img/gun_right.png")
+	weapons = {
+		gun = {
+			name = "pistol",
+			--position and dimensions
+			x = 0,
+			y = 0,
+			OFFSET = 20,
+			WIDTH = 35,
+			HEIGHT = 50,
+			-- media
+			IMAGE_LEFT = love.graphics.newImage("img/gun_left.png"),
+			IMAGE_RIGHT = love.graphics.newImage("img/gun_right.png")
+		},
 	},
-	bullet = {
-		name = "pistol bullet",
-		--position and dimensions
-		x = 0,
-		y = 0,
-		WIDTH = 50,
-		HEIGHT = 35,
-		-- horizontal physics
-		SPEED = 50,
-		-- media
-		IMAGE = love.graphics.newImage("img/bullet.png"),
-		-- other
-		show = false,
-		direction = "right"
+	projectiles = {
+		bullet = {
+			name = "pistol bullet",
+			--position and dimensions
+			x = 0,
+			y = 0,
+			WIDTH = 50,
+			HEIGHT = 35,
+			-- horizontal physics
+			SPEED = 50,
+			-- media
+			IMAGE = love.graphics.newImage("img/bullet.png"),
+			-- other
+			show = false,
+			direction = "right"
+		},
 	},
 	cursor = {
 		x = 0,
@@ -99,6 +103,6 @@ function debugUpdate()
 	debug.update(debug_x_friction, players[1].x_FRICTION)
 	debug.update(debug_y_jump_speed, players[1].y_JUMP_SPEED)
 	debug.update(debug_y_gravity, players[1].y_GRAVITY)
-	debug.update(debug_gun_x, players[1].gun.x)
-	debug.update(debug_bullet_x, players[1].bullet.x)
+	debug.update(debug_gun_x, players[1].weapons.gun.x)
+	debug.update(debug_bullet_x, players[1].projectiles.bullet.x)
 end
