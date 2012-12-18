@@ -3,13 +3,19 @@ function love.draw()
 		--love.graphics.rectangle("line", player.x, player.y, player.WIDTH, player.HEIGHT)
 		if player.direction == "left" then
 			love.graphics.draw(player.IMAGE_LEFT, player.x, player.y)
-			love.graphics.draw(player.weapons.gun.IMAGE_LEFT, player.weapons.gun.x, player.weapons.gun.y)
+			for _, weapon in pairs(player.weapons) do
+				love.graphics.draw(weapon.IMAGE_LEFT, weapon.x, weapon.y)
+			end
 		elseif player.direction == "right" then
 			love.graphics.draw(player.IMAGE_RIGHT, player.x, player.y)
-			love.graphics.draw(player.weapons.gun.IMAGE_RIGHT, player.weapons.gun.x, player.weapons.gun.y)
+			for _, weapon in pairs(player.weapons) do
+				love.graphics.draw(weapon.IMAGE_RIGHT, weapon.x, weapon.y)
+			end
 		end
-		if player.projectiles.bullet.show then
-			love.graphics.draw(player.projectiles.bullet.IMAGE, player.projectiles.bullet.x, player.projectiles.bullet.y)
+		for _, projectile in pairs(player.projectiles) do
+			if projectile.show then
+				love.graphics.draw(projectile.IMAGE, projectile.x, projectile.y)
+			end
 		end
 		love.graphics.draw(player.cursor.IMAGE, player.cursor.x, player.cursor.y)
 	end

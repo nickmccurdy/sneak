@@ -62,27 +62,34 @@ function love.update(dt)
 			end
 		-- gun movement
 			if player.direction == "left" then
-				player.weapons.gun.x = player.x - player.weapons.gun.WIDTH - player.weapons.gun.OFFSET
-				player.weapons.gun.y = player.y + player.HEIGHT/2 - player.weapons.gun.HEIGHT/2
+				for _, weapon in pairs(player.weapons) do
+					weapon.x = player.x - weapon.WIDTH - weapon.OFFSET
+					weapon.y = player.y + player.HEIGHT/2 - weapon.HEIGHT/2
+				end
 			elseif player.direction == "right" then
-				player.weapons.gun.x = player.x + player.WIDTH + player.weapons.gun.OFFSET
-				player.weapons.gun.y = player.y + player.HEIGHT/2 - player.weapons.gun.HEIGHT/2
+				for _, weapon in pairs(player.weapons) do
+					weapon.x = player.x + player.WIDTH + weapon.OFFSET
+					weapon.y = player.y + player.HEIGHT/2 - weapon.HEIGHT/2
+				end
 			end
 		-- bullet movement
-			if love.mouse.isDown("l") and not player.projectiles.bullet.show then
-				player.projectiles.bullet.direction = player.direction
-				player.projectiles.bullet.x = player.weapons.gun.x
-				player.projectiles.bullet.y = player.weapons.gun.y
-				player.projectiles.bullet.show = true
-			end
-			if player.projectiles.bullet.show then
-				if player.projectiles.bullet.x + player.projectiles.bullet.WIDTH < 0 or player.projectiles.bullet.x > game.WIDTH then
-					player.projectiles.bullet.show = false
-					else
-					if player.projectiles.bullet.direction == "left" then
-						player.projectiles.bullet.x = player.projectiles.bullet.x - player.projectiles.bullet.SPEED
-					elseif player.projectiles.bullet.direction == "right" then
-						player.projectiles.bullet.x = player.projectiles.bullet.x + player.projectiles.bullet.SPEED
+			for _, projectile in pairs(player.projectiles) do
+				if love.mouse.isDown("l") and not projectile.show then
+					projectile.direction = player.direction
+					print(projectile.weapon)
+					projectile.x = player.weapons[projectile.weapon].x
+					projectile.y = player.weapons[projectile.weapon].y
+					projectile.show = true
+				end
+				if projectile.show then
+					if projectile.x + projectile.WIDTH < 0 or projectile.x > game.WIDTH then
+						projectile.show = false
+						else
+						if projectile.direction == "left" then
+							projectile.x = projectile.x - projectile.SPEED
+						elseif projectile.direction == "right" then
+							projectile.x = projectile.x + projectile.SPEED
+						end
 					end
 				end
 			end

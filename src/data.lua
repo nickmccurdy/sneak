@@ -24,7 +24,7 @@ player_template = {
 	jumping_allowed = true,
 	-- weapons
 	weapons = {
-		gun = {
+		pistol = {
 			name = "pistol",
 			--position and dimensions
 			x = 0,
@@ -39,7 +39,8 @@ player_template = {
 	},
 	projectiles = {
 		bullet = {
-			name = "pistol bullet",
+			name = "bullet",
+			weapon = "pistol",
 			--position and dimensions
 			x = 0,
 			y = 0,
@@ -103,6 +104,6 @@ function debugUpdate()
 	debug.update(debug_x_friction, players[1].x_FRICTION)
 	debug.update(debug_y_jump_speed, players[1].y_JUMP_SPEED)
 	debug.update(debug_y_gravity, players[1].y_GRAVITY)
-	debug.update(debug_gun_x, players[1].weapons.gun.x)
+	debug.update(debug_gun_x, players[1].weapons.pistol.x)
 	debug.update(debug_bullet_x, players[1].projectiles.bullet.x)
 end
